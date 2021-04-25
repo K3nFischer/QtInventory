@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "inventory.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
