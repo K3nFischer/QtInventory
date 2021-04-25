@@ -5,7 +5,7 @@
 class Item {
 public:
     Item();
-    Item(std::string name, double retailPrice, double wholesalePrice, int numberOfItems, std::string manufacturer);
+    Item(std::string name, double retailPrice, double wholesalePrice, std::string manufacturer, int numberOfItems);
     std::string getName(){return name;}
     double getRetailPrice(){return retailPrice;}
     int returnItemCount(){return numberOfItems;}

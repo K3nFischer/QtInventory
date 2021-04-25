@@ -8,7 +8,7 @@ Item::Item() {
     std::string manufacturer = "";
 }
 
-Item::Item(std::string inputName, double inputRetail, double inputWholesale, int inputNumItems, std::string inputManufacturer) {
+Item::Item(std::string inputName, double inputRetail, double inputWholesale, std::string inputManufacturer, int inputNumItems) {
     name = inputName;
     retailPrice = inputRetail;
     wholesalePrice = inputWholesale;
