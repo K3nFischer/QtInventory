@@ -2,6 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QDebug>
+#include <QTableView>
+#include <QSql>
+#include <QSqlQuery>
+#include <QSqlQueryModel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,9 +26,20 @@ public:
 private slots:
     void on_actionNew_triggered();
 
-    void on_pushButton_released();
+    void on_actionOpen_triggered();
+
+    void on_searchButton_released();
+
+    void on_clearButton_released();
+
+    void on_actionSave_triggered();
+
+    void on_searchBox_returnPressed();
 
 private:
     Ui::MainWindow *ui;
+    QString currentFile = "";
+    QSqlDatabase mydb;
+    QSqlQueryModel *model;
 };
 #endif // MAINWINDOW_H
