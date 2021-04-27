@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    mydb.close();
+
 }
 
 
@@ -70,4 +72,24 @@ void MainWindow::on_actionSave_triggered()
 void MainWindow::on_searchBox_returnPressed()
 {
     on_searchButton_released();
+}
+
+void MainWindow::on_insertButton_released()
+{
+    QString name = ui->nameBox->text();
+    double price = ui->priceBox->text().toDouble();
+    double wholesale = ui->wholesaleBox->text().toDouble();
+    QString manufacturer = ui->manufacturerBox->text();
+    double count = ui->countBox->text().toDouble();
+
+    QSqlQuery query(mydb);
+    query.prepare("INSERT INTO Inventory (name, price, wholesale, manufacturer, countItem) VALUES (:name, :price, :wholesale, :manufacturer, :count)" );
+    query.bindValue(":name", name);
+    query.bindValue(":price", price);
+    query.bindValue(":wholesale", wholesale);
+    query.bindValue(":manufacturer", manufacturer);
+    query.bindValue(":count", count);
+    query.exec();
+    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+    ui->tableView->setModel(model);
 }

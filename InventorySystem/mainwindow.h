@@ -36,6 +36,8 @@ private slots:
 
     void on_searchBox_returnPressed();
 
+    void on_insertButton_released();
+
 private:
     Ui::MainWindow *ui;
     QString currentFile = "";
