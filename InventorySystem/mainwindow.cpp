@@ -93,3 +93,22 @@ void MainWindow::on_insertButton_released()
     model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
     ui->tableView->setModel(model);
 }
+
+
+void MainWindow::on_deleteButton_released()
+{
+
+        QString name = ui->nameBox->text();
+         QString manufacturer = ui->manufacturerBox->text();
+
+
+        QSqlQuery query(mydb);
+        query.prepare("DELETE FROM Inventory WHERE name = :name" );
+        query.bindValue(":name", name);
+        query.bindValue(":manufacturer", manufacturer);
+        query.exec();
+
+        //Used for the view
+        model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+        ui->tableView->setModel(model);
+}

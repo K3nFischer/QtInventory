@@ -38,6 +38,10 @@ private slots:
 
     void on_insertButton_released();
 
+    void on_pushButton_released();
+
+    void on_deleteButton_released();
+
 private:
     Ui::MainWindow *ui;
     QString currentFile = "";
