@@ -20,7 +20,7 @@
       <x>30</x>
       <y>110</y>
       <width>241</width>
-      <height>431</height>
+      <height>436</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -206,6 +206,13 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="deleteButton">
+       <property name="text">
+        <string>Delete</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QTableView" name="tableView">
@@ -257,19 +264,6 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="deleteButton">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>550</y>
-      <width>241</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Delete</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -277,7 +271,7 @@
      <x>0</x>
      <y>0</y>
      <width>1162</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

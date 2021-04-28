@@ -8,8 +8,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     mydb = QSqlDatabase::addDatabase("QSQLITE");
     model = new QSqlQueryModel();
+    mydb.open();
+    QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
+    query.exec();
     ui->setupUi(this);
 
+    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+    ui->tableView->setModel(model);
 }
 
 MainWindow::~MainWindow()
@@ -24,7 +29,13 @@ void MainWindow::on_actionNew_triggered()
 {
     currentFile.clear();
     mydb.close();
+    mydb.setDatabaseName(currentFile);
+    mydb.open();
+    QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
+    query.exec();
 
+    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+    ui->tableView->setModel(model);
 }
 
 void MainWindow::on_actionOpen_triggered()
@@ -66,7 +77,7 @@ void MainWindow::on_clearButton_released()
 
 void MainWindow::on_actionSave_triggered()
 {
-    model->submit();
+
 }
 
 void MainWindow::on_searchBox_returnPressed()
@@ -99,13 +110,10 @@ void MainWindow::on_deleteButton_released()
 {
 
         QString name = ui->nameBox->text();
-         QString manufacturer = ui->manufacturerBox->text();
-
 
         QSqlQuery query(mydb);
         query.prepare("DELETE FROM Inventory WHERE name = :name" );
         query.bindValue(":name", name);
-        query.bindValue(":manufacturer", manufacturer);
         query.exec();
 
         //Used for the view
