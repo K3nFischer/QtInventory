@@ -120,3 +120,401 @@ void MainWindow::on_deleteButton_released()
         model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
         ui->tableView->setModel(model);
 }
+
+
+
+
+///Completed but not optimized, not fully bugchecked
+
+void MainWindow::on_modifyButton_released()
+{
+
+    bool priceState, wholesaleState, manufacturerState, countState;
+    priceState = wholesaleState = manufacturerState = countState = false;
+
+    QString name = ui->nameBox->text();
+    double price = ui->priceBox->text().toDouble();
+    double wholesale = ui->wholesaleBox->text().toDouble();
+    QString manufacturer = ui->manufacturerBox->text();
+    double count = ui->countBox->text().toDouble();
+
+    if(price != 0)
+        priceState = true;
+    if(wholesale != 0)
+        wholesaleState = true;
+    if(manufacturer != "")
+        manufacturerState = true;
+    if(count != 0)
+        countState = true;
+
+    //nameState && priceState && wholesaleState && manufacturerState && countState;
+
+    QSqlQuery query(mydb);
+
+    if(!priceState && !wholesaleState && !manufacturerState && !countState){
+        return;
+    }
+
+    ///Price Conditional Branch
+    else if(priceState){
+        ///Price state single conditional branch
+        if(priceState && !wholesaleState && !manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET price = :price WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Price state double conditonal branch
+        else if(priceState && wholesaleState && !manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && !wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET price = :price, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && !wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Price state triple conditional branch
+        else if(priceState && wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && !wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, countItem = :count, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":count", count);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if (priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else
+            return;
+    }
+    ///Wholesale conditional branch
+    else if(wholesaleState){
+        ///Wholesale single conditional branch
+        if(!priceState && wholesaleState && !manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Wholesale double conditional branch
+        else if(priceState && wholesaleState && !manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, price = :price WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, countItem = :count WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Wholesale triple conditional branch
+        else if(priceState && wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, price = :price, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":price", price);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, countItem = :count, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":count", count);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET wholesale = :wholesale, countItem = :count, price = :price WHERE name = :name");
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":count", count);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if (priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else return;
+    }
+    ///Manufacturer conditional branch
+    else if(manufacturerState){
+        ///Manufacturer single conditional branch
+        if(!priceState && !wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Manufacturer double conditional branch
+        else if(priceState && !wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, price = :price WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && !wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Manufacturer triple conditional branch
+        else if(priceState && wholesaleState && manufacturerState && !countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, price = :price, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, countItem = :count, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && !wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET manufacturer = :manufacturer, countItem = :count, price = :price WHERE name = :name");
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if (priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else
+            return;
+    }
+    ///Count conditional branch
+    if(countState){
+        ///Count single conditional branch
+        if(!priceState && !wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Count double conditional branch
+        else if(priceState && !wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, price = :price WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && !wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, manufacturer = :manufacturer WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        ///Count triple conditional branch
+        else if(priceState && wholesaleState && !manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, price = :price, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(!priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, manufacturer = :manufacturer, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if(priceState && !wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET countItem = :count, manufacturer = :manufacturer, wholesale = :wholesale WHERE name = :name");
+            query.bindValue(":count", count);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":price", price);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else if (priceState && wholesaleState && manufacturerState && countState){
+            query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+            query.bindValue(":price", price);
+            query.bindValue(":wholesale", wholesale);
+            query.bindValue(":manufacturer", manufacturer);
+            query.bindValue(":count", count);
+            query.bindValue(":name", name);
+            query.exec();
+            query.prepare("SELECT * FROM Inventory WHERE name = :name");
+            query.exec();
+        }
+        else
+            return;
+    }
+    else if (priceState && wholesaleState && manufacturerState && countState){
+        query.prepare("UPDATE Inventory SET price = :price, wholesale = :wholesale, manufacturer = :manufacturer, countItem = :count WHERE name = :name");
+        query.bindValue(":price", price);
+        query.bindValue(":wholesale", wholesale);
+        query.bindValue(":manufacturer", manufacturer);
+        query.bindValue(":count", count);
+        query.bindValue(":name", name);
+        query.exec();
+        query.prepare("SELECT * FROM Inventory WHERE name = :name");
+        query.exec();
+    }
+    else
+        return;
+
+//    QSqlQuery query(mydb);
+//    query.prepare("UPDATE Inventory")
+
+    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+    ui->tableView->setModel(model);
+
+}
+
+
+
+
+
+
+
