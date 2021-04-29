@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 }
 
-
+//Ben Katin
 void MainWindow::on_actionNew_triggered()
 {
     currentFile.clear();
@@ -37,7 +37,7 @@ void MainWindow::on_actionNew_triggered()
     model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
     ui->tableView->setModel(model);
 }
-
+//Kendall Fischer
 void MainWindow::on_actionOpen_triggered()
 {
     QString filename = QFileDialog::getOpenFileName(this, "Open File");
@@ -54,7 +54,7 @@ void MainWindow::on_actionOpen_triggered()
         ui->tableView->setModel(model);
     }
 }
-
+//Michael Briones
 void MainWindow::on_searchButton_released()
 {
     QString input = ui->searchBox->text();
@@ -67,24 +67,24 @@ void MainWindow::on_searchButton_released()
     ui->tableView->setModel(model);
 
 }
-
+//Garret Mook
 void MainWindow::on_clearButton_released()
 {
     ui->searchBox->clear();
     model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
     ui->tableView->setModel(model);
 }
-
+//Michael Briones
 void MainWindow::on_actionSave_triggered()
 {
 
 }
-
+//Michael Briones
 void MainWindow::on_searchBox_returnPressed()
 {
     on_searchButton_released();
 }
-
+//Christopher Wong
 void MainWindow::on_insertButton_released()
 {
     QString name = ui->nameBox->text();
@@ -105,7 +105,7 @@ void MainWindow::on_insertButton_released()
     ui->tableView->setModel(model);
 }
 
-
+//Garret Mook
 void MainWindow::on_deleteButton_released()
 {
 
@@ -119,4 +119,62 @@ void MainWindow::on_deleteButton_released()
         //Used for the view
         model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
         ui->tableView->setModel(model);
+}
+//Christopher Wong
+void MainWindow::on_modifyButton_released()
+{
+
+        bool priceState, wholesaleState, manufacturerState, countState;
+        priceState = wholesaleState = manufacturerState = countState = false;
+
+        QString name = ui->nameBox->text();
+        double price = ui->priceBox->text().toDouble();
+        double wholesale = ui->wholesaleBox->text().toDouble();
+        QString manufacturer = ui->manufacturerBox->text();
+        double count = ui->countBox->text().toDouble();
+
+        if(price != 0)
+            priceState = true;
+        if(wholesale != 0)
+            wholesaleState = true;
+        if(manufacturer != "")
+            manufacturerState = true;
+        if(count != 0)
+            countState = true;
+
+        //nameState && priceState && wholesaleState && manufacturerState && countState;
+
+        QSqlQuery query(mydb);
+        if(priceState){
+                query.prepare("UPDATE Inventory SET price = :price WHERE name = :name");
+                query.bindValue(":name", name);
+                query.bindValue(":price", price);
+                query.exec();
+            }
+            if(wholesaleState){
+                query.prepare("UPDATE Inventory SET wholesale = :wholesale WHERE name = :name");
+                query.bindValue(":name", name);
+                query.bindValue(":wholesale", wholesale);
+                query.exec();
+            }
+            if(manufacturerState){
+                query.prepare("UPDATE Inventory SET manufacturer = :manufacturer WHERE name = :name");
+                query.bindValue(":name", name);
+                query.bindValue(":manufacturer", manufacturer);
+                query.exec();
+            }
+            if(countState){
+                query.prepare("UPDATE Inventory SET countItem = :count WHERE name = :name");
+                query.bindValue(":name", name);
+                query.bindValue(":count", count);
+                query.exec();
+            }
+
+
+            query.prepare("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory WHERE name = :name");
+            query.bindValue(":name", name);
+            query.exec();
+            model->setQuery(query);
+            ui->tableView->setModel(model);
+
 }
