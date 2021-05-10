@@ -7,14 +7,14 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     mydb = QSqlDatabase::addDatabase("QSQLITE");
+    mydb.setDatabaseName(":memory:");
     model = new QSqlQueryModel();
     mydb.open();
     QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
     query.exec();
     ui->setupUi(this);
 
-    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-    ui->tableView->setModel(model);
+    refresh();
 }
 
 MainWindow::~MainWindow()
@@ -29,13 +29,12 @@ void MainWindow::on_actionNew_triggered()
 {
     currentFile.clear();
     mydb.close();
-    mydb.setDatabaseName(currentFile);
+    mydb.setDatabaseName(":memory:");
     mydb.open();
     QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
     query.exec();
 
-    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-    ui->tableView->setModel(model);
+    refresh();
 }
 //Kendall Fischer
 void MainWindow::on_actionOpen_triggered()
@@ -50,8 +49,7 @@ void MainWindow::on_actionOpen_triggered()
         mydb.setDatabaseName(currentFile);
         mydb.open();
 
-        model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-        ui->tableView->setModel(model);
+        refresh();
     }
 }
 //Michael Briones
@@ -71,8 +69,7 @@ void MainWindow::on_searchButton_released()
 void MainWindow::on_clearButton_released()
 {
     ui->searchBox->clear();
-    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-    ui->tableView->setModel(model);
+    refresh();
 }
 //Michael Briones
 void MainWindow::on_actionSave_triggered()
@@ -101,8 +98,8 @@ void MainWindow::on_insertButton_released()
     query.bindValue(":manufacturer", manufacturer);
     query.bindValue(":count", count);
     query.exec();
-    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-    ui->tableView->setModel(model);
+
+    refresh();
 }
 
 //Garret Mook
@@ -116,9 +113,7 @@ void MainWindow::on_deleteButton_released()
         query.bindValue(":name", name);
         query.exec();
 
-        //Used for the view
-        model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
-        ui->tableView->setModel(model);
+        refresh();
 }
 //Christopher Wong
 void MainWindow::on_modifyButton_released()
@@ -171,10 +166,10 @@ void MainWindow::on_modifyButton_released()
             }
 
 
-            query.prepare("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory WHERE name = :name");
-            query.bindValue(":name", name);
-            query.exec();
-            model->setQuery(query);
-            ui->tableView->setModel(model);
-
+            refresh();
+}
+//used to refresh view to default
+void MainWindow::refresh(){
+    model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
+    ui->tableView->setModel(model);
 }

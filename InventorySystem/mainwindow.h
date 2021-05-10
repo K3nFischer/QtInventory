@@ -42,6 +42,8 @@ private slots:
 
     void on_modifyButton_released();
 
+    void refresh();
+
 private:
     Ui::MainWindow *ui;
     QString currentFile = "";
