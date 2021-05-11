@@ -39,9 +39,10 @@ void EditableSqlModel::refresh()
 
 bool EditableSqlModel::setCount(QString name, int count)
 {
-
-
-
+    QSqlQuery query;
+    query.prepare("UPDATE Inventory SET countItem = :count WHERE name = :name");
+    query.bindValue(":name", name);
+    query.bindValue(":count", count);
     return query.exec();
 }
 
