@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "editablesqlmodel.h"
 #include <QMainWindow>
 #include <QFile>
 #include <QFileDialog>
@@ -8,6 +9,7 @@
 #include <QDebug>
 #include <QTableView>
 #include <QSql>
+#include <QtSql>
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 
@@ -48,6 +50,6 @@ private:
     Ui::MainWindow *ui;
     QString currentFile = "";
     QSqlDatabase mydb;
-    QSqlQueryModel *model;
+    EditableSqlModel *model;
 };
 #endif // MAINWINDOW_H

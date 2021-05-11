@@ -8,12 +8,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     mydb = QSqlDatabase::addDatabase("QSQLITE");
     mydb.setDatabaseName(":memory:");
-    model = new QSqlQueryModel();
     mydb.open();
     QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
     query.exec();
-    ui->setupUi(this);
 
+    ui->setupUi(this);
+    model = new EditableSqlModel;
     refresh();
 }
 
@@ -173,3 +173,5 @@ void MainWindow::refresh(){
     model->setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
     ui->tableView->setModel(model);
 }
+
+
