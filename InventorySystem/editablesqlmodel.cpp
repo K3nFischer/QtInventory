@@ -7,7 +7,6 @@ EditableSqlModel::EditableSqlModel(QObject *parent)
 {
 }
 
-//! [0]
 Qt::ItemFlags EditableSqlModel::flags(
         const QModelIndex &index) const
 {
@@ -16,9 +15,7 @@ Qt::ItemFlags EditableSqlModel::flags(
         flags |= Qt::ItemIsEditable;
     return flags;
 }
-//! [0]
 
-//! [1]
 bool EditableSqlModel::setData(const QModelIndex &index, const QVariant &value, int /* role */)
 {
     if (index.column() != 4)
@@ -34,17 +31,18 @@ bool EditableSqlModel::setData(const QModelIndex &index, const QVariant &value, 
     refresh();
     return ok;
 }
-//! [1]
 
 void EditableSqlModel::refresh()
 {
     setQuery("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory");
 }
 
-//! [2]
 bool EditableSqlModel::setCount(QString name, int count)
 {
 
+
+
+    return query.exec();
 }
-//! [2]
+
 
