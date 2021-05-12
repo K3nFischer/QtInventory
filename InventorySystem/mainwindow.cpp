@@ -7,14 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     mydb = QSqlDatabase::addDatabase("QSQLITE");
-    mydb.setDatabaseName(":memory:");
-    mydb.open();
-    QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
-    query.exec();
 
     ui->setupUi(this);
     model = new EditableSqlModel;
-    refresh();
 }
 
 MainWindow::~MainWindow()
@@ -23,18 +18,10 @@ MainWindow::~MainWindow()
     mydb.close();
 
 }
-
-//Ben Katin
+//Michael Briones
 void MainWindow::on_actionNew_triggered()
 {
-    currentFile.clear();
-    mydb.close();
-    mydb.setDatabaseName(":memory:");
-    mydb.open();
-    QSqlQuery query("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
-    query.exec();
 
-    refresh();
 }
 //Kendall Fischer
 void MainWindow::on_actionOpen_triggered()
@@ -71,11 +58,7 @@ void MainWindow::on_clearButton_released()
     ui->searchBox->clear();
     refresh();
 }
-//Michael Briones
-void MainWindow::on_actionSave_triggered()
-{
 
-}
 //Michael Briones
 void MainWindow::on_searchBox_returnPressed()
 {

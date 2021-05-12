@@ -34,8 +34,6 @@ private slots:
 
     void on_clearButton_released();
 
-    void on_actionSave_triggered();
-
     void on_searchBox_returnPressed();
 
     void on_insertButton_released();
