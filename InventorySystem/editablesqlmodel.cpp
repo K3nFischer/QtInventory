@@ -6,7 +6,7 @@ EditableSqlModel::EditableSqlModel(QObject *parent)
     : QSqlQueryModel(parent)
 {
 }
-//Kendall Fischer & Garret Mook
+//Kendall Fischer & Garret Mook & Ben Katin
 Qt::ItemFlags EditableSqlModel::flags(
         const QModelIndex &index) const
 {
@@ -15,7 +15,7 @@ Qt::ItemFlags EditableSqlModel::flags(
         flags |= Qt::ItemIsEditable;
     return flags;
 }
-//Kendall Fischer & Garret Mook
+//Kendall Fischer & Garret Mook & Ben Katin
 bool EditableSqlModel::setData(const QModelIndex &index, const QVariant &value, int /* role */)
 {
     if (index.column() != 4)

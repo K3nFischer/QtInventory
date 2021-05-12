@@ -21,9 +21,8 @@ MainWindow::~MainWindow()
 //Michael Briones
 void MainWindow::on_actionNew_triggered()
 {
-    QString filename = QFileDialog::getSaveFileName(this,
-        tr("Data Base File"), "",
-               tr("Data Base File (*.db);;All Files ()"));
+    ui->statusMessage->clear();
+    QString filename = QFileDialog::getSaveFileName(this, tr("New File"), "", tr("Data Base File (*.db);;All Files ()"));
         QFile file(filename);
         currentFile = filename;
 
@@ -39,7 +38,8 @@ void MainWindow::on_actionNew_triggered()
 //Kendall Fischer
 void MainWindow::on_actionOpen_triggered()
 {
-    QString filename = QFileDialog::getOpenFileName(this, "Open File");
+    ui->statusMessage->clear();
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("Data Base File (*.db);;All Files ()"));
     QFile file(filename);
     currentFile = filename;
     if(!file.open(QIODevice::ReadOnly | QFile::Text)){
@@ -55,6 +55,7 @@ void MainWindow::on_actionOpen_triggered()
 //Michael Briones
 void MainWindow::on_searchButton_released()
 {
+    ui->statusMessage->clear();
     QString input = ui->searchBox->text();
     QSqlQuery query(mydb);
     query.prepare("SELECT name AS Name, price AS Price, wholesale AS Wholesale, manufacturer AS Manufacturer, countItem AS Count FROM Inventory WHERE name LIKE '%'||:name||'%'");
@@ -160,34 +161,42 @@ void MainWindow::on_modifyButton_released()
         ui->manufacturerBox->clear();
         ui->countBox->clear();
 
+        bool priceOK = false;
+        bool wholeOK = false;
+        bool manufactureOK = false;
+        bool countOK = false;
         QSqlQuery query(mydb);
         if(priceState){
                 query.prepare("UPDATE Inventory SET price = :price WHERE name = :name");
                 query.bindValue(":name", name);
                 query.bindValue(":price", price);
-                query.exec();
+                priceOK = query.exec();
             }
             if(wholesaleState){
                 query.prepare("UPDATE Inventory SET wholesale = :wholesale WHERE name = :name");
                 query.bindValue(":name", name);
                 query.bindValue(":wholesale", wholesale);
-                query.exec();
+                wholeOK = query.exec();
             }
             if(manufacturerState){
                 query.prepare("UPDATE Inventory SET manufacturer = :manufacturer WHERE name = :name");
                 query.bindValue(":name", name);
                 query.bindValue(":manufacturer", manufacturer);
-                query.exec();
+                manufactureOK = query.exec();
             }
             if(countState){
                 query.prepare("UPDATE Inventory SET countItem = :count WHERE name = :name");
                 query.bindValue(":name", name);
                 query.bindValue(":count", count);
-                query.exec();
+                countOK = query.exec();
             }
+        if(priceOK || wholeOK || manufactureOK || countOK){
+            ui->statusMessage->setText("Successfully modified item");
+        } else {
+            ui->statusMessage->setText("Could not modify item");
+        }
 
-
-            refresh();
+        refresh();
 }
 //used to refresh view to default
 void MainWindow::refresh(){
