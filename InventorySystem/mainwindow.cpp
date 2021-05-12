@@ -21,7 +21,20 @@ MainWindow::~MainWindow()
 //Michael Briones
 void MainWindow::on_actionNew_triggered()
 {
+    QString filename = QFileDialog::getSaveFileName(this,
+        tr("Data Base File"), "",
+               tr("Data Base File (*.db);;All Files ()"));
+        QFile file(filename);
+        currentFile = filename;
 
+            mydb.close();
+            mydb.setDatabaseName(currentFile);
+            mydb.open();
+            QSqlQuery query1("DROP TABLE IF EXISTS Inventory");
+            query1.exec();
+            QSqlQuery query2("CREATE TABLE IF NOT EXISTS Inventory (name TEXT, price INTEGER, wholesale INTEGER, manufacturer TEXT, countItem INTEGER, PRIMARY KEY(name))");
+            query2.exec();
+            refresh();
 }
 //Kendall Fischer
 void MainWindow::on_actionOpen_triggered()
@@ -73,6 +86,12 @@ void MainWindow::on_insertButton_released()
     QString manufacturer = ui->manufacturerBox->text();
     double count = ui->countBox->text().toDouble();
 
+    ui->nameBox->clear();
+    ui->priceBox->clear();
+    ui->wholesaleBox->clear();
+    ui->manufacturerBox->clear();
+    ui->countBox->clear();
+
     QSqlQuery query(mydb);
     query.prepare("INSERT INTO Inventory (name, price, wholesale, manufacturer, countItem) VALUES (:name, :price, :wholesale, :manufacturer, :count)" );
     query.bindValue(":name", name);
@@ -80,7 +99,11 @@ void MainWindow::on_insertButton_released()
     query.bindValue(":wholesale", wholesale);
     query.bindValue(":manufacturer", manufacturer);
     query.bindValue(":count", count);
-    query.exec();
+    if( query.exec() ){
+        ui->statusMessage->setText("Successfully inserted item");
+    } else {
+        ui->statusMessage->setText("Could not insert item");
+    }
 
     refresh();
 }
@@ -91,10 +114,20 @@ void MainWindow::on_deleteButton_released()
 
         QString name = ui->nameBox->text();
 
+        ui->nameBox->clear();
+        ui->priceBox->clear();
+        ui->wholesaleBox->clear();
+        ui->manufacturerBox->clear();
+        ui->countBox->clear();
+
         QSqlQuery query(mydb);
         query.prepare("DELETE FROM Inventory WHERE name = :name" );
         query.bindValue(":name", name);
-        query.exec();
+        if( query.exec() ){
+            ui->statusMessage->setText("Successfully deleted item");
+        } else {
+            ui->statusMessage->setText("Could not delete item");
+        }
 
         refresh();
 }
@@ -121,6 +154,11 @@ void MainWindow::on_modifyButton_released()
             countState = true;
 
         //nameState && priceState && wholesaleState && manufacturerState && countState;
+        ui->nameBox->clear();
+        ui->priceBox->clear();
+        ui->wholesaleBox->clear();
+        ui->manufacturerBox->clear();
+        ui->countBox->clear();
 
         QSqlQuery query(mydb);
         if(priceState){

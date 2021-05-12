@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1192</width>
-    <height>760</height>
+    <height>795</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@ background-color: qlineargradient(spread:pad, x1:0.483, y1:0, x2:1, y2:1, stop:0
       <x>30</x>
       <y>110</y>
       <width>241</width>
-      <height>573</height>
+      <height>611</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
@@ -68,160 +68,141 @@ background-color: qlineargradient(spread:pad, x1:0.483, y1:0, x2:1, y2:1, stop:0
        <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
-         <height>80</height>
+         <height>100</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
+      <widget class="QLabel" name="nameLabel">
+       <property name="font">
+        <font>
+         <family>Yu Gothic UI Semibold</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(213, 213, 213);</string>
+       </property>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="nameLabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(213, 213, 213);</string>
-         </property>
-         <property name="text">
-          <string>Name</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QLineEdit" name="nameBox"/>
        </item>
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="priceLabel">
+       <property name="font">
+        <font>
+         <family>Yu Gothic UI Semibold</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(213, 213, 213);</string>
+       </property>
+       <property name="text">
+        <string>Price </string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="priceLabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(213, 213, 213);</string>
-         </property>
-         <property name="text">
-          <string>Price </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QLineEdit" name="priceBox"/>
        </item>
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="wholesaleLabel">
+       <property name="font">
+        <font>
+         <family>Yu Gothic UI Semibold</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(213, 213, 213);</string>
+       </property>
+       <property name="text">
+        <string>Wholesale</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="wholesaleLabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(213, 213, 213);</string>
-         </property>
-         <property name="text">
-          <string>Wholesale</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QLineEdit" name="wholesaleBox"/>
        </item>
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="manuLabel">
+       <property name="font">
+        <font>
+         <family>Yu Gothic UI Semibold</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(213, 213, 213);</string>
+       </property>
+       <property name="text">
+        <string>Manufacturer</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <item>
-        <widget class="QLabel" name="manuLabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(213, 213, 213);</string>
-         </property>
-         <property name="text">
-          <string>Manufacturer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>30</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QLineEdit" name="manufacturerBox"/>
        </item>
       </layout>
      </item>
      <item>
+      <widget class="QLabel" name="countLabel">
+       <property name="font">
+        <font>
+         <family>Yu Gothic UI Semibold</family>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: rgb(213, 213, 213);</string>
+       </property>
+       <property name="text">
+        <string>Count</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <item>
-        <widget class="QLabel" name="countLabel">
-         <property name="styleSheet">
-          <string notr="true">color: rgb(213, 213, 213);</string>
-         </property>
-         <property name="text">
-          <string>Count</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
        <item>
         <widget class="QLineEdit" name="countBox"/>
        </item>
       </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item>
       <widget class="QPushButton" name="insertButton">
@@ -252,7 +233,7 @@ background-color: qlineargradient(spread:pad, x1:0.483, y1:0, x2:1, y2:1, stop:0
       <x>300</x>
       <y>30</y>
       <width>861</width>
-      <height>651</height>
+      <height>691</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -289,7 +270,7 @@ background-color: qlineargradient(spread:pad, x1:0.483, y1:0, x2:1, y2:1, stop:0
     <property name="font">
      <font>
       <family>Yu Gothic UI Semibold</family>
-      <pointsize>18</pointsize>
+      <pointsize>22</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -305,6 +286,25 @@ background-color: qlineargradient(spread:pad, x1:0.483, y1:0, x2:1, y2:1, stop:0
     </property>
     <property name="scaledContents">
      <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="statusMessage">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>680</y>
+      <width>241</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(214, 214, 214);</string>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
