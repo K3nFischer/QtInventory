@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 
 #include <iostream>
+//main constructor
+//sets up database, model, and creates main window
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -19,6 +21,8 @@ MainWindow::~MainWindow()
 
 }
 //Michael Briones
+//reimplemented New so that it now creates a new database file
+//Opens a windows where you can set a file name
 void MainWindow::on_actionNew_triggered()
 {
     ui->statusMessage->clear();
@@ -36,6 +40,7 @@ void MainWindow::on_actionNew_triggered()
             refresh();
 }
 //Kendall Fischer
+//Opens a window where you can select a file name to open
 void MainWindow::on_actionOpen_triggered()
 {
     ui->statusMessage->clear();
@@ -53,6 +58,7 @@ void MainWindow::on_actionOpen_triggered()
     }
 }
 //Michael Briones
+//creates a query that takes input from the searchBox
 void MainWindow::on_searchButton_released()
 {
     ui->statusMessage->clear();
@@ -67,6 +73,7 @@ void MainWindow::on_searchButton_released()
 
 }
 //Garret Mook
+//resets to standard view
 void MainWindow::on_clearButton_released()
 {
     ui->searchBox->clear();
@@ -74,11 +81,13 @@ void MainWindow::on_clearButton_released()
 }
 
 //Michael Briones
+//allows for Enter press to activate search
 void MainWindow::on_searchBox_returnPressed()
 {
     on_searchButton_released();
 }
 //Christopher Wong
+//Inserts Item into the SQLite database
 void MainWindow::on_insertButton_released()
 {
     QString name = ui->nameBox->text();
@@ -110,6 +119,7 @@ void MainWindow::on_insertButton_released()
 }
 
 //Garret Mook
+//Deletes Item from the SQLite database
 void MainWindow::on_deleteButton_released()
 {
 
@@ -133,6 +143,7 @@ void MainWindow::on_deleteButton_released()
         refresh();
 }
 //Christopher Wong
+//Takes in inputs and modifies a single field or multiple at once
 void MainWindow::on_modifyButton_released()
 {
 
